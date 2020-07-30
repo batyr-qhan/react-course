@@ -11,8 +11,12 @@ function PageListPagination (props) {
   const page = +qs.parse(location.search, { ignoreQueryPrefix: true }).page || 0
 
   function handlePageClick ({ selected }) {
+    const fixedSelected = selected + 1
     const { history, location } = props
-    const params = { page: selected || null }
+
+    const checkSelected = (value) => (value === 1) ? null : value
+
+    const params = { page: checkSelected(fixedSelected) }
     const updateSearch = { ...qs.parse(location.search, { ignoreQueryPrefix: true }), ...params }
     history.push(`${location.pathname}${qs.stringify(updateSearch, { addQueryPrefix: true, skipNulls: true })}`)
   }
