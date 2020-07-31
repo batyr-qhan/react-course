@@ -1,34 +1,59 @@
 import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button'
-import Modal from 'react-bootstrap/Modal'
-import YouTube from 'react-youtube'
+import Modal from 'react-modal'
+// import YouTube from 'react-youtube'
 import css from './PagePopUpWithYoutube.module.scss'
+import ReactPlayer from 'react-player'
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+}
 
 function PagePopUpWithYoutube () {
-  const [show, setShow] = useState(false)
+  // let subtitle
+  const [modalIsOpen, setIsOpen] = useState(false)
 
-  const handleClose = () => setShow(false)
-  const handleShow = () => setShow(true)
+  function openModal () {
+    setIsOpen(true)
+  }
 
-  const opts = {
-    height: '390',
-    width: '640',
-    playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      autoplay: 0
-    }
+  // function afterOpenModal () {
+  //   // references are now sync'd and can be accessed.
+  //   subtitle.style.color = '#f00'
+  // }
+
+  function closeModal () {
+    setIsOpen(false)
   }
 
   return (
     <>
-      <Button variant='primary' onClick={handleShow}>
+      <Button variant='primary' onClick={openModal}>
         Launch demo modal
       </Button>
+      <Modal
+        isOpen={modalIsOpen}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel='Example Modal'
+      >
 
-      <Modal show={show} onHide={handleClose} dialogClassName={css.modal}>
-        <Modal.Body>
-          <YouTube videoId='GLuAIloEWRY' opts={opts} />
-        </Modal.Body>
+        {/* <h2 ref={_subtitle => (subtitle = _subtitle)}>Hello</h2> */}
+        <button onClick={closeModal} className={css.button}>close</button>
+        <ReactPlayer
+          url='https://vimeo.com/49384334'
+          playing='true'
+          controls='true'
+          volume={0}
+        />
       </Modal>
     </>
   )
