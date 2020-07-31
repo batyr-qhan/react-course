@@ -6,6 +6,9 @@ import classNames from 'classnames'
 
 function Menu () {
   const isFixedHeader = useSelector(state => state.header.isFixed)
+  const offsetX = useSelector(state => state.pageMouseMove.offsetX)
+  const offsetY = useSelector(state => state.pageMouseMove.offsetY)
+  console.log('from menu', offsetY, offsetX)
   return (
     <div className={classNames(css.wrap, { [css._header]: isFixedHeader })}>
       <h2>Меню</h2>
@@ -19,6 +22,8 @@ function Menu () {
       <div><NavLink to='/list-pagination' activeClassName={css.active}>Список с пагинацией</NavLink></div>
       <div><NavLink to='/list-pagination2' activeClassName={css.active}>Список с пагинацией 2</NavLink></div>
       <div><NavLink to='/mouse-move' activeClassName={css.active}>useEffect mouseMove</NavLink></div>
+      <div><NavLink to='/offsetX' activeClassName={css.active}>offsetX {offsetX}</NavLink></div>
+      <div><NavLink to='/offsetY' activeClassName={css.active}>offsetY {offsetY}</NavLink></div>
     </div>
   )
 }
